@@ -1,0 +1,152 @@
+Q 1. Perform the following tasks:
+
+a. Create Student table with following attributes (STUDENT_ID , FIRST_NAME, LAST_NAME, PHONE_NUMBER, MARKS, COURSE_ID).
+
+b. Create Course table with following attributes (COURSE_ID, COURSE_NAME).
+
+c. Write a SQL statement to insert 8 records with your own value into the tables.
+
+d. Write a query to get the number of students with the same course.
+
+f. Write a query to get the student name, course name and marks of the students.
+
+g. Write a query to get the Average marks of students course wise.
+
+ 
+
+
+Ans:-   CREATE DATABASE Student;
+USE Student;
+
+CREATE TABLE Student (
+    STUDENT_ID INT PRIMARY KEY,
+    FIRST_NAME VARCHAR(50),
+    LAST_NAME VARCHAR(50),
+    PHONE_NUMBER VARCHAR(15),
+    MARKS DECIMAL(5 , 2 ),
+    COURSE_ID INT
+        REFERENCES Course (COURSE_ID)
+);
+CREATE TABLE Course (
+    COURSE_ID INT PRIMARY KEY,
+    COURSE_NAME VARCHAR(100)
+);
+
+INSERT INTO Course (COURSE_ID, COURSE_NAME) VALUES (1, 'Computer Science');
+INSERT INTO Course (COURSE_ID, COURSE_NAME) VALUES (2, 'Mathematics');
+INSERT INTO Course (COURSE_ID, COURSE_NAME) VALUES (3, 'Physics');
+INSERT INTO Course (COURSE_ID, COURSE_NAME) VALUES (4, 'Chemistry');
+SELECT * FROM Course;
+
+INSERT INTO Student VALUES (1, 'Sayantan', 'Roy ', '1234567890', 85.5, 1);
+
+INSERT INTO Student VALUES (2, 'Alapan ', 'Das ', '0987654321', 92.0, 2);
+
+INSERT INTO Student VALUES (3, 'Sumana', 'ghorui', '1122334455', 78.0, 3);
+
+INSERT INTO Student VALUES (4, 'raj', 'das', '2233445566', 88.5, 4);
+
+INSERT INTO Student VALUES (5, 'suvo', 'mondal', '3344556677', 79.0, 1);
+
+INSERT INTO Student VALUES (6, 'jit', 'das', '4455667788', 91.5, 2);
+
+INSERT INTO Student VALUES (7, 'arit', 'mondal', '5566778899', 84.0, 3);
+
+INSERT INTO Student VALUES (8, 'sahil', 'khan', '6677889900', 87.0, 4);
+  
+SELECT * FROM Student;
+  
+ 
+ SELECT COURSE_NAME, COUNT(*) AS NUM_OF_STUDENTS
+FROM Student S
+JOIN Course C ON S.COURSE_ID = C.COURSE_ID
+GROUP BY COURSE_NAME;
+
+
+SELECT S.FIRST_NAME, S.LAST_NAME, C.COURSE_NAME, S.MARKS
+FROM Student S
+JOIN Course C ON S.COURSE_ID = C.COURSE_ID;
+
+SELECT C.COURSE_NAME, AVG(S.MARKS) AS AVERAGE_MARKS
+FROM Student S
+JOIN Course C ON S.COURSE_ID = C.COURSE_ID
+GROUP BY C.COURSE_NAME;
+
+
+
+
+
+
+Q 2.  Create database for hospital management system & Perform the following tasks:
+
+a. Create HEALTH CARE WORKERS table with following attributes (EMPLOYEE_ID , FIRST_NAME, LAST_NAME,EMAIL, PHONE_NUMBER, HIRE_DATE, SALARY, DESIGNATION).
+
+b. Create PATIENT table with following attributes (PATIENT_ID,NAME, PHONE_NUMBER).
+
+c. Write a SQL statement to insert 10 records with your own value into the tables.
+
+d. Write a query to get the names (first_name, last_name),Designation, salary.
+
+e. Write a query to get the number of employees with the same Designation
+
+f. Write a query to get employee name who are getting salary more than 25000.
+
+g. Fetch HEALTH CARE WORKERS name using their employee id.
+
+
+
+
+
+
+
+Ans:-          CREATE DATABASE HospitalManagement;
+USE HospitalManagement;
+
+CREATE TABLE HealthCareWorkers (
+    EMPLOYEE_ID INT PRIMARY KEY,
+    FIRST_NAME VARCHAR(50),
+    LAST_NAME VARCHAR(50),
+    EMAIL VARCHAR(100),
+    PHONE_NUMBER VARCHAR(15),
+    HIRE_DATE DATE,
+    SALARY DOUBLE,
+    DESIGNATION VARCHAR(50)
+);
+
+CREATE TABLE Patient (
+    PATIENT_ID INT PRIMARY KEY,
+    NAME VARCHAR(100),
+    PHONE_NUMBER VARCHAR(15)
+);
+
+
+INSERT INTO HealthCareWorkers VALUES (1, 'John', 'Doe', 'john.doe@example.com', '1234567890', '2020-01-15', 30000.00, 'Doctor');
+INSERT INTO HealthCareWorkers VALUES (2, 'Jane', 'Smith', 'jane.smith@example.com', '0987654321', '2018-03-22', 25000.00, 'Nurse');
+INSERT INTO HealthCareWorkers VALUES (3, 'James', 'Brown', 'james.brown@example.com', '1122334455', '2021-06-10', 27000.00, 'Technician');
+INSERT INTO HealthCareWorkers VALUES (4, 'Emily', 'Davis', 'emily.davis@example.com', '2233445566', '2019-11-07', 32000.00, 'Doctor');
+INSERT INTO HealthCareWorkers VALUES (5, 'Michael', 'Wilson', 'michael.wilson@example.com', '3344556677', '2020-08-21', 22000.00, 'Nurse');
+
+SELECT* FROM HealthcareWorkers;
+
+INSERT INTO Patient VALUES (1, 'Alice Johnson', '5551234567');
+INSERT INTO Patient VALUES(2, 'Bob White', '5552345678');
+INSERT INTO Patient VALUES(3, 'Charlie Green', '5553456789');
+INSERT INTO Patient VALUES(4, 'Diana Black', '5554567890');
+INSERT INTO Patient VALUES(5, 'Edward Red', '5555678901');
+
+SELECT * FROM Patient;
+
+SELECT FIRST_NAME, LAST_NAME, DESIGNATION, SALARY
+FROM HealthCareWorkers;
+
+SELECT DESIGNATION, COUNT(*) AS NUM_OF_EMPLOYEES
+FROM HealthCareWorkers
+GROUP BY DESIGNATION;
+
+SELECT FIRST_NAME, LAST_NAME
+FROM HealthCareWorkers
+WHERE SALARY > 25000;
+
+SELECT FIRST_NAME, LAST_NAME
+FROM HealthCareWorkers
+WHERE EMPLOYEE_ID = 3; 
